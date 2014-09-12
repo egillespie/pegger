@@ -22,13 +22,13 @@ public class Game {
             .build();
 
     private final UUID gameId;
-    private final Optional<Turn> lastTurn;
+    private final Optional<Peg> lastPegMoved;
     private final ImmutableSet<Peg> pegs;
     private final boolean gameOver;
 
-    private Game(UUID gameId, Turn lastTurn, ImmutableSet<Peg> pegs) {
+    private Game(UUID gameId, Peg lastPegMoved, ImmutableSet<Peg> pegs) {
         this.gameId = Preconditions.checkNotNull(gameId);
-        this.lastTurn = Optional.fromNullable(lastTurn);
+        this.lastPegMoved = Optional.fromNullable(lastPegMoved);
         this.pegs = Preconditions.checkNotNull(pegs);
         this.gameOver = calculateGameOver();
         validateGameState();
@@ -39,29 +39,28 @@ public class Game {
     }
 
     public Game movePeg(Peg pegWithNewPosition) {
-        Position fromPosition = null;
+        Peg pegWithOldPosition = null;
         ImmutableSet.Builder<Peg> pegBuilder = ImmutableSet.builder();
         for (Peg peg : pegs) {
             if (peg.getPegId() == pegWithNewPosition.getPegId()) {
                 pegBuilder.add(pegWithNewPosition);
-                fromPosition = peg.getPosition();
+                pegWithOldPosition = peg;
             } else {
                 pegBuilder.add(peg);
             }
         }
-        if (fromPosition == null) {
+        if (pegWithOldPosition == null) {
             throw new IllegalStateException(String.format("Peg %d does not exist.", pegWithNewPosition.getPegId()));
         }
-        Turn turn = new Turn(pegWithNewPosition.getPegId(), fromPosition, pegWithNewPosition.getPosition());
-        return new Game(gameId, turn, pegBuilder.build());
+        return new Game(gameId, pegWithOldPosition, pegBuilder.build());
     }
 
     public UUID getGameId() {
         return gameId;
     }
 
-    public Optional<Turn> getLastTurn() {
-        return lastTurn;
+    public Optional<Peg> getLastPegMoved() {
+        return lastPegMoved;
     }
 
     public ImmutableSet<Peg> getPegs() {
@@ -93,60 +92,19 @@ public class Game {
             Position position = peg.getPosition();
             if (position.getRow() < 1 || position.getRow() > ROWS) {
                 throw new IllegalStateException(String.format("Peg %d is at an invalid row on the board.", peg.getPegId()));
-            }
-            if (position.getColumn() < 1 || position.getColumn() > COLUMNS) {
+            } else if (position.getColumn() < 1 || position.getColumn() > COLUMNS) {
                 throw new IllegalStateException(String.format("Peg %d is at an invalid column on the board.", peg.getPegId()));
             }
 
-            int pegIdCount = 0;
             int positionCount = 0;
             for (Peg otherPeg : pegs) {
-                if (peg.getPegId() == otherPeg.getPegId()) {
-                    pegIdCount++;
-                }
                 if (peg.getPosition().equals(otherPeg.getPosition())) {
                     positionCount++;
                 }
             }
-            if (pegIdCount != 1) {
-                throw new IllegalStateException("All peg identifiers on a board must be unique.");
-            }
             if (positionCount != 1) {
                 throw new IllegalStateException("All pegs on a board must be at different positions.");
             }
-        }
-    }
-
-    public static class Turn {
-        private final int pegId;
-        private final Position fromPosition;
-        private final Position toPosition;
-
-        private Turn(int pegId, Position fromPosition, Position toPosition) {
-            this.pegId = Preconditions.checkNotNull(pegId);
-            this.fromPosition = Preconditions.checkNotNull(fromPosition);
-            this.toPosition = Preconditions.checkNotNull(toPosition);
-        }
-
-        public int getPegId() {
-            return pegId;
-        }
-
-        public Position getFromPosition() {
-            return fromPosition;
-        }
-
-        public Position getToPosition() {
-            return toPosition;
-        }
-
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this)
-                    .add("pegId", pegId)
-                    .add("fromPosition", fromPosition)
-                    .add("toPosition", toPosition)
-                    .toString();
         }
     }
 
@@ -159,22 +117,19 @@ public class Game {
             return false;
         }
         Game that = (Game) o;
-        return Objects.equal(this.gameId, that.gameId)
-                && Objects.equal(this.lastTurn, that.lastTurn)
-                && Objects.equal(this.pegs, that.pegs)
-                && Objects.equal(this.gameOver, that.gameOver);
+        return Objects.equal(this.gameId, that.gameId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(gameId, lastTurn, pegs, gameOver);
+        return Objects.hashCode(gameId);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("gameId", gameId)
-                .add("lastTurn", lastTurn)
+                .add("lastPegMoved", lastPegMoved)
                 .add("gameOver", gameOver)
                 .add("pegs", pegs)
                 .toString();
