@@ -1,7 +1,9 @@
-package com.technicalrex.webapp.pegger.games;
+package com.technicalrex.webapp.pegger.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 public class Position {
     private final int row;
@@ -33,31 +35,27 @@ public class Position {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Position position = (Position) o;
-
-        if (column != position.column) return false;
-        if (row != position.row) return false;
-
-        return true;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Position that = (Position) o;
+        return Objects.equal(this.row, that.row)
+                && Objects.equal(this.column, that.column);
     }
 
     @Override
     public int hashCode() {
-        int result = row;
-        result = 31 * result + column;
-        return result;
+        return Objects.hashCode(row, column);
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Position");
-        sb.append("{row=").append(row);
-        sb.append(", column=").append(column);
-        sb.append('}');
-        return sb.toString();
+        return MoreObjects.toStringHelper(this)
+                .add("row", row)
+                .add("column", column)
+                .toString();
     }
 }

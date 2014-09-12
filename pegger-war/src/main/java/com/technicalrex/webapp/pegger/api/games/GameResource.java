@@ -1,7 +1,8 @@
-package com.technicalrex.webapp.pegger.games;
+package com.technicalrex.webapp.pegger.api.games;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.technicalrex.webapp.pegger.model.Game;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
