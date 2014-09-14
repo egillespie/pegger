@@ -20,13 +20,6 @@ public class PegRepository {
 
     public Optional<Peg> getById(UUID gameId, int pegId) {
         Game game = gameRepository.getById(gameId).orNull();
-        if (game != null) {
-            for (Peg peg : game.getPegs()) {
-                if (peg.getPegId() == pegId) {
-                    return Optional.of(peg);
-                }
-            }
-        }
-        return Optional.absent();
+        return game == null ? Optional.<Peg>absent() : game.getPeg(pegId);
     }
 }

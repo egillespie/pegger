@@ -1,10 +1,10 @@
 package com.technicalrex.webapp.pegger.model;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
-import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
+import com.google.common.base.*;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
 
 import java.util.UUID;
 
@@ -21,15 +21,22 @@ public class Game {
             .add(new Peg(6, Peg.Type.YELLOW, new Position(2, 3)))
             .build();
 
+    private static final Function<Peg, Integer> PEG_INDEXER = new Function<Peg, Integer>() {
+        @Override
+        public Integer apply(Peg peg) {
+            return peg.getPegId();
+        }
+    };
+
     private final UUID gameId;
     private final Optional<Peg> lastPegMoved;
-    private final ImmutableSet<Peg> pegs;
+    private final ImmutableMap<Integer, Peg> pegs;
     private final boolean gameOver;
 
     private Game(UUID gameId, Peg lastPegMoved, ImmutableSet<Peg> pegs) {
         this.gameId = Preconditions.checkNotNull(gameId);
         this.lastPegMoved = Optional.fromNullable(lastPegMoved);
-        this.pegs = Preconditions.checkNotNull(pegs);
+        this.pegs = Maps.uniqueIndex(Preconditions.checkNotNull(pegs), PEG_INDEXER);
         this.gameOver = calculateGameOver();
         validateGameState();
     }
@@ -41,7 +48,7 @@ public class Game {
     public Game movePeg(Peg pegWithNewPosition) {
         Peg pegWithOldPosition = null;
         ImmutableSet.Builder<Peg> pegBuilder = ImmutableSet.builder();
-        for (Peg peg : pegs) {
+        for (Peg peg : getPegs()) {
             if (peg.getPegId() == pegWithNewPosition.getPegId()) {
                 pegBuilder.add(pegWithNewPosition);
                 pegWithOldPosition = peg;
@@ -63,8 +70,12 @@ public class Game {
         return lastPegMoved;
     }
 
-    public ImmutableSet<Peg> getPegs() {
-        return pegs;
+    public ImmutableCollection<Peg> getPegs() {
+        return pegs.values();
+    }
+
+    public Optional<Peg> getPeg(int pegId) {
+        return Optional.fromNullable(pegs.get(pegId));
     }
 
     public boolean isGameOver() {
@@ -72,11 +83,12 @@ public class Game {
     }
 
     private boolean calculateGameOver() {
-        for (Peg peg : pegs) {
+        Iterable<Peg> allPegs = getPegs();
+        for (Peg peg : allPegs) {
             if (peg.getType().isNeutral()) {
                 continue;
             }
-            for (Peg testPeg : pegs) {
+            for (Peg testPeg : allPegs) {
                 if (peg.getPegId() != testPeg.getPegId() && peg.getType() == testPeg.getType()
                         && (peg.getPosition().isAdjacentTo(testPeg.getPosition()))) {
                     return true;
@@ -88,7 +100,8 @@ public class Game {
 
     private void validateGameState() {
         Preconditions.checkArgument(pegs.size() == 6, "Exactly six pegs are required.");
-        for (Peg peg : pegs) {
+        Iterable<Peg> allPegs = getPegs();
+        for (Peg peg : allPegs) {
             Position position = peg.getPosition();
             if (position.getRow() < 1 || position.getRow() > ROWS) {
                 throw new IllegalStateException(String.format("Peg %d is at an invalid row on the board.", peg.getPegId()));
@@ -97,7 +110,7 @@ public class Game {
             }
 
             int positionCount = 0;
-            for (Peg otherPeg : pegs) {
+            for (Peg otherPeg : allPegs) {
                 if (peg.getPosition().equals(otherPeg.getPosition())) {
                     positionCount++;
                 }
