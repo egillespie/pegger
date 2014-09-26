@@ -36,9 +36,6 @@ public class GameOperator {
     }
 
     public Game movePeg(Game game, Peg pegWithNewPosition) {
-        if (game.isGameOver()) {
-            throw new InvalidTurnException("The game is over. No additional turns may be played.");
-        }
         validateMove(game, pegWithNewPosition);
         Game newGame = game.movePeg(pegWithNewPosition);
         gameRepository.update(newGame);
@@ -46,32 +43,36 @@ public class GameOperator {
     }
 
     private void validateMove(Game game, Peg pegWithNewPosition) {
+        if (game.isGameOver()) {
+            throw new InvalidMoveException("The game is over. No additional pegs may be moved.");
+        }
+
         Peg pegWithOldPosition = pegRepository.getById(game.getGameId(), pegWithNewPosition.getPegId()).orNull();
         if (pegWithOldPosition == null) {
-            throw new InvalidTurnException(String.format("Peg %d does not exist.", pegWithNewPosition.getPegId()));
+            throw new InvalidMoveException(String.format("Peg %d does not exist.", pegWithNewPosition.getPegId()));
         } else if (pegWithOldPosition.getType() != pegWithNewPosition.getType()) {
-            throw new InvalidTurnException("Peg type cannot be changed.");
+            throw new InvalidMoveException("Peg type cannot be changed.");
         }
 
         Position toPosition = pegWithNewPosition.getPosition();
         if (toPosition.getColumn() < 1 || toPosition.getColumn() > Game.COLUMNS) {
-            throw new InvalidTurnException("Peg cannot be moved to that column.");
+            throw new InvalidMoveException("Peg cannot be moved to that column.");
         } else if (toPosition.getRow() < 1 || toPosition.getRow() > Game.ROWS) {
-            throw new InvalidTurnException("Peg cannot be moved to that row.");
+            throw new InvalidMoveException("Peg cannot be moved to that row.");
         } else if (toPosition.equals(pegWithOldPosition.getPosition())) {
-            throw new InvalidTurnException("The peg must be moved.");
+            throw new InvalidMoveException("The peg must be moved.");
         }
 
         for (Peg peg : game.getPegs()) {
             if (toPosition.equals(peg.getPosition())) {
-                throw new InvalidTurnException("Another peg is in that position.");
+                throw new InvalidMoveException("Another peg is in that position.");
             }
         }
 
         if (game.getLastPegMoved().isPresent()) {
             Peg lastPegMoved = game.getLastPegMoved().get();
             if (lastPegMoved.getPegId() == pegWithNewPosition.getPegId() && lastPegMoved.getPosition().equals(toPosition)) {
-                throw new InvalidTurnException("The previous turn cannot be undone.");
+                throw new InvalidMoveException("This peg cannot be returned to its previous location.");
             }
         }
     }

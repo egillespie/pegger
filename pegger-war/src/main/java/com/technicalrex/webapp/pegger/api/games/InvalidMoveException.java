@@ -1,9 +1,9 @@
 package com.technicalrex.webapp.pegger.api.games;
 
-public class InvalidTurnException extends RuntimeException {
+public class InvalidMoveException extends RuntimeException {
     private final Reason reason;
 
-    public InvalidTurnException(String message) {
+    public InvalidMoveException(String message) {
         super(message);
         this.reason = new Reason(message);
     }

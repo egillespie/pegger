@@ -47,7 +47,7 @@ public class PegResource {
             gameOperator.movePeg(game, peg);
             URI location = uriInfo.getBaseUriBuilder().path("games").path("{gameId}").build(game.getGameId());
             return Response.status(Response.Status.SEE_OTHER).location(location).build();
-        } catch (InvalidTurnException e) {
+        } catch (InvalidMoveException e) {
             return Response.status(Response.Status.FORBIDDEN).entity(e.getReason()).build();
         }
     }
