@@ -53,15 +53,15 @@ peggerControllers.controller('PeggerCtrl', ['$scope', 'games', function ($scope,
                     case 400:
                         $scope.messageKey = 'pegs.notSelected.error';
                         break;
-                    case 403:
-                        $scope.messageKey = 'pegs.user.error';
-                        $scope.message = response.data.message;
-                        break;
                     case 404:
                         $scope.messageKey = 'games.notFound.error';
                         break;
                     case 409:
                         $scope.messageKey = 'pegs.conflict.error';
+                        break;
+                    case 422:
+                        $scope.messageKey = 'pegs.user.error';
+                        $scope.message = response.data.message;
                         break;
                     default:
                         $scope.messageKey = 'pegs.put.error';
