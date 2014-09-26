@@ -1,0 +1,35 @@
+<div class="board">
+    <div>
+        <span class="peg {{pegStyle(1,1)}}" ng-click="pegClicked(1,1)"></span>
+        <span class="peg {{pegStyle(1,2)}}" ng-click="pegClicked(1,2)"></span>
+        <span class="peg {{pegStyle(1,3)}}" ng-click="pegClicked(1,3)"></span>
+        <span class="peg {{pegStyle(1,4)}}" ng-click="pegClicked(1,4)"></span>
+    </div>
+    <div>
+        <span class="peg {{pegStyle(2,1)}}" ng-click="pegClicked(2,1)"></span>
+        <span class="peg {{pegStyle(2,2)}}" ng-click="pegClicked(2,2)"></span>
+        <span class="peg {{pegStyle(2,3)}}" ng-click="pegClicked(2,3)"></span>
+        <span class="peg {{pegStyle(2,4)}}" ng-click="pegClicked(2,4)"></span>
+    </div>
+</div>
+<div class="alert alert-danger" role="alert" ng-show="messageKey == 'games.post.error'">
+    Oh snap! Something went wrong creating your game. <a href="javascript:location.reload()">Try again?</a>
+</div>
+<div class="alert alert-danger" role="alert" ng-show="messageKey == 'pegs.notSelected.error'">
+    You have to select a peg in order to move a peg.
+</div>
+<div class="alert alert-warning" role="alert" ng-show="messageKey == 'pegs.user.error'">
+    {{message}}
+</div>
+<div class="alert alert-danger" role="alert" ng-show="messageKey == 'games.notFound.error'">
+    Woops! That game doesn't exist any more. Would you like to create a <a href="javascript:location.reload()">new game?</a>
+</div>
+<div class="alert alert-danger" role="alert" ng-show="messageKey == 'pegs.conflict.error'">
+    You can't move a different peg than what is selected.
+</div>
+<div class="alert alert-danger" role="alert" ng-show="messageKey == 'pegs.put.error'">
+    Gremlins got into your game. They may have broken your game permanently but try taking another turn just in case this is a false alarm.
+</div>
+<div class="alert alert-info" role="alert" ng-show="game.gameOver">
+    Game Over! <a href="javascript:location.reload()">Try again?</a>
+</div>
