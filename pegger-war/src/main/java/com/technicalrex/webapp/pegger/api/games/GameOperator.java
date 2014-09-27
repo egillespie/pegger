@@ -51,16 +51,35 @@ public class GameOperator {
         if (pegWithOldPosition == null) {
             throw new InvalidMoveException(String.format("Peg %d does not exist.", pegWithNewPosition.getPegId()));
         } else if (pegWithOldPosition.getType() != pegWithNewPosition.getType()) {
-            throw new InvalidMoveException("Peg type cannot be changed.");
+            throw new InvalidMoveException("The peg type cannot be changed.");
         }
 
+        Position fromPosition = pegWithOldPosition.getPosition();
         Position toPosition = pegWithNewPosition.getPosition();
         if (toPosition.getColumn() < 1 || toPosition.getColumn() > Game.COLUMNS) {
-            throw new InvalidMoveException("Peg cannot be moved to that column.");
+            throw new InvalidMoveException("The peg cannot be moved to that column.");
         } else if (toPosition.getRow() < 1 || toPosition.getRow() > Game.ROWS) {
-            throw new InvalidMoveException("Peg cannot be moved to that row.");
-        } else if (toPosition.equals(pegWithOldPosition.getPosition())) {
+            throw new InvalidMoveException("The peg cannot be moved to that row.");
+        } else if (toPosition.equals(fromPosition)) {
             throw new InvalidMoveException("The peg must be moved.");
+        } else if (toPosition.getColumn() != fromPosition.getColumn()
+                && toPosition.getRow() != fromPosition.getRow()) {
+            throw new InvalidMoveException("The peg cannot be moved diagonally.");
+        } else if (Math.abs(toPosition.getColumn() - fromPosition.getColumn()) > 2) {
+            throw new InvalidMoveException("That location is too far away.");
+        } else if (Math.abs(toPosition.getColumn() - fromPosition.getColumn()) == 2) {
+            boolean foundMiddlePeg = false;
+            int middleColumn = (toPosition.getColumn() + fromPosition.getColumn()) / 2;
+            for (Peg peg : game.getPegs()) {
+                Position position = peg.getPosition();
+                if (position.getRow() == toPosition.getRow() && position.getColumn() == middleColumn) {
+                    foundMiddlePeg = true;
+                    break;
+                }
+            }
+            if (!foundMiddlePeg) {
+                throw new InvalidMoveException("The peg cannot jump an empty space.");
+            }
         }
 
         for (Peg peg : game.getPegs()) {
