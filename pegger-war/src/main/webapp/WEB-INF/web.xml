@@ -23,6 +23,10 @@
             <param-name>javax.ws.rs.Application</param-name>
             <param-value>com.technicalrex.webapp.pegger.internal.JerseyConfig</param-value>
         </init-param>
+        <init-param>
+          <param-name>jersey.config.server.response.setStatusOverSendError</param-name>
+          <param-value>true</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
