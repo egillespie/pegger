@@ -1,14 +1,16 @@
 var peggerControllers = angular.module('peggerControllers', []);
 
 peggerControllers.controller('PeggerCtrl', ['$scope', 'games', function ($scope, games) {
-    $scope.selectedPeg = null;
+    $scope.newGame = function() {
+        $scope.selectedPeg = null;
 
-    games.post(function(response) {
-        $scope.game = response.data;
-        $scope.messageKey = '';
-    }, function(response) {
-        $scope.messageKey = 'games.post.error';
-    });
+        games.post(function(response) {
+            $scope.game = response.data;
+            $scope.messageKey = '';
+        }, function(response) {
+            $scope.messageKey = 'games.post.error';
+        });
+    };
 
     findPeg = function(row, column) {
         var pegs = $scope.game.pegs;
@@ -72,4 +74,6 @@ peggerControllers.controller('PeggerCtrl', ['$scope', 'games', function ($scope,
             selectPeg(row, column);
         }
     };
+
+    $scope.newGame();
 }]);

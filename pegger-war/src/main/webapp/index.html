@@ -18,22 +18,38 @@
 </head>
 <body ng-controller="PeggerCtrl">
 <div class="container">
+  <div class="header">
+    <ul class="nav nav-pills pull-right">
+      <li class="active"><a href="#/play">Play</a></li>
+      <li><a href="http://technicalrex.com/tag/pegger/?order=asc" target="_blank">Tutorial</a></li>
+      <li><a href="https://github.com/egillespie/pegger" target="_blank">GitHub</a></li>
+    </ul>
+    <h3>
+      <span class="peg r">P</span>
+      <span class="peg g">E</span>
+      <span class="peg y">G</span>
+      <span class="peg g">G</span>
+      <span class="peg r">E</span>
+      <span class="peg y">R</span>
+    </h3>
+  </div>
+
   <div class="jumbotron" ng-view></div>
 
   <div class="row marketing">
     <div class="col-lg-6">
-      <h4><a href="rules.html">Rules</a></h4>
+      <h4><a href="#/rules">Rules</a></h4>
       <p>You could probably learn the rules by playing the game but here's a summary just in case.</p>
 
-      <h4><a href="about.html">About</a></h4>
+      <h4><a href="#/about">About</a></h4>
       <p>Learn about the author of Pegger and how the game was inspired.</p>
     </div>
 
     <div class="col-lg-6">
-      <h4><a href="http://technicalrex.com/tag/pegger/?order=asc">Tutorial</a></h4>
+      <h4><a href="http://technicalrex.com/tag/pegger/?order=asc" target="_blank">Tutorial</a></h4>
       <p>If you're a developer and want to read about how Pegger was made then read through this tutorial.</p>
 
-      <h4><a href="https://github.com/egillespie/pegger">GitHub</a></h4>
+      <h4><a href="https://github.com/egillespie/pegger" target="_blank">GitHub</a></h4>
       <p>Another developer resource for those who just want to browse the Pegger source code, report bugs, or request new features.</p>
     </div>
   </div>

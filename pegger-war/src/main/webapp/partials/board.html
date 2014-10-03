@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="alert alert-danger" role="alert" ng-show="messageKey == 'games.post.error'">
-    Oh snap! Something went wrong creating your game. <a href="javascript:location.reload()">Try again?</a>
+    Oh snap! Something went wrong creating your game. <a ng-click="newGame()">Try again?</a>
 </div>
 <div class="alert alert-danger" role="alert" ng-show="messageKey == 'pegs.notSelected.error'">
     You have to select a peg in order to move a peg.
@@ -31,5 +31,5 @@
     Gremlins got into your game. They may have broken your game permanently but try taking another turn just in case this is a false alarm.
 </div>
 <div class="alert alert-info" role="alert" ng-show="game.gameOver">
-    Game Over! <a href="javascript:location.reload()">Try again?</a>
+    Game Over! <a ng-click="newGame()">Try again?</a>
 </div>
