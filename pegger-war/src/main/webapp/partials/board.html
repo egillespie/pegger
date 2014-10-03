@@ -1,3 +1,4 @@
+<div class="player-box">Ready Player <span class="player">{{currentPlayer.name}}</span>.</div>
 <div class="board">
     <div>
         <span class="peg {{pegStyle(1,1)}}" ng-click="pegClicked(1,1)"></span>
@@ -12,24 +13,29 @@
         <span class="peg {{pegStyle(2,4)}}" ng-click="pegClicked(2,4)"></span>
     </div>
 </div>
-<div class="alert alert-danger" role="alert" ng-show="messageKey == 'games.post.error'">
-    Oh snap! Something went wrong creating your game. <a ng-click="newGame()">Try again?</a>
+<div class="message-box" ng-show="messageKey || game.gameOver">
+    <span class="warning" ng-show="messageKey == 'games.post.error'">
+        Oh snap! Something went wrong creating your game. <a ng-click="newGame()" href="javascript:void(0)" class="alert-link">Try again?</a>
+    </span>
+    <span class="warning" ng-show="messageKey == 'pegs.notSelected.error'">
+        You have to select a peg in order to move a peg.
+    </span>
+    <span class="warning" ng-show="messageKey == 'pegs.user.error'">
+        {{message}}
+    </span>
+    <span class="warning" ng-show="messageKey == 'games.notFound.error'">
+        Woops! That game doesn't exist any more. Would you like to create a <a ng-click="newGame()" href="javascript:void(0)" class="alert-link">new game?</a>
+    </span>
+    <span class="warning" ng-show="messageKey == 'pegs.conflict.error'">
+        You can't move a different peg than what is selected.
+    </span>
+    <span class="warning" ng-show="messageKey == 'pegs.put.error'">
+        Gremlins got into your game. They may have broken your game permanently but try taking another turn just in case this is a false alarm.
+    </span>
+    <span class="info" ng-show="game.gameOver && !messageKey">
+        Game Over! <a ng-click="newGame()" href="javascript:void(0)" class="alert-link">Try again?</a>
+    </span>
 </div>
-<div class="alert alert-danger" role="alert" ng-show="messageKey == 'pegs.notSelected.error'">
-    You have to select a peg in order to move a peg.
-</div>
-<div class="alert alert-warning" role="alert" ng-show="messageKey == 'pegs.user.error'">
-    {{message}}
-</div>
-<div class="alert alert-danger" role="alert" ng-show="messageKey == 'games.notFound.error'">
-    Woops! That game doesn't exist any more. Would you like to create a <a href="javascript:location.reload()">new game?</a>
-</div>
-<div class="alert alert-danger" role="alert" ng-show="messageKey == 'pegs.conflict.error'">
-    You can't move a different peg than what is selected.
-</div>
-<div class="alert alert-danger" role="alert" ng-show="messageKey == 'pegs.put.error'">
-    Gremlins got into your game. They may have broken your game permanently but try taking another turn just in case this is a false alarm.
-</div>
-<div class="alert alert-info" role="alert" ng-show="game.gameOver">
-    Game Over! <a ng-click="newGame()">Try again?</a>
+<div class="message-box" ng-hide="messageKey || game.gameOver">
+    To take your turn, select a peg and then select a vacant (white) space.
 </div>

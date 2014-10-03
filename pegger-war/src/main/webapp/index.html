@@ -6,57 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Pegger is a simple little two player peg jumping strategy game">
     <meta name="author" content="Erik Gillespie erik.gillespie@technicalrex.com">
+    <meta name="favicon" content="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.png">
 
     <title>Pegger</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.3/angular.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.3/angular-route.min.js"></script>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.3/angular.min.js"></script>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.3/angular-route.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="js/services.js"></script>
 </head>
 <body ng-controller="PeggerCtrl">
 <div class="container">
-  <div class="header">
-    <ul class="nav nav-pills pull-right">
-      <li class="active"><a href="#/play">Play</a></li>
-      <li><a href="http://technicalrex.com/tag/pegger/?order=asc" target="_blank">Tutorial</a></li>
-      <li><a href="https://github.com/egillespie/pegger" target="_blank">GitHub</a></li>
-    </ul>
-    <h3>
-      <span class="peg r">P</span>
-      <span class="peg g">E</span>
-      <span class="peg y">G</span>
-      <span class="peg g">G</span>
-      <span class="peg r">E</span>
-      <span class="peg y">R</span>
-    </h3>
-  </div>
-
-  <div class="jumbotron" ng-view></div>
-
-  <div class="row marketing">
-    <div class="col-lg-6">
-      <h4><a href="#/rules">Rules</a></h4>
-      <p>You could probably learn the rules by playing the game but here's a summary just in case.</p>
-
-      <h4><a href="#/about">About</a></h4>
-      <p>Learn about the author of Pegger and how the game was inspired.</p>
+    <div class="header">
+        <ul class="nav nav-pills pull-right">
+            <li class="active"><a href="#/play">Play</a></li>
+            <li><a href="http://technicalrex.com/tag/pegger/?order=asc" target="_blank">Tutorial</a></li>
+            <li><a href="https://github.com/egillespie/pegger" target="_blank">GitHub</a></li>
+        </ul>
+        <h2>
+            <a href="/" class="link">
+                <span class="peg r">P</span>
+                <span class="peg g">E</span>
+                <span class="peg y">G</span>
+                <span class="peg g">G</span>
+                <span class="peg r">E</span>
+                <span class="peg y">R</span>
+            </a>
+        </h2>
     </div>
 
-    <div class="col-lg-6">
-      <h4><a href="http://technicalrex.com/tag/pegger/?order=asc" target="_blank">Tutorial</a></h4>
-      <p>If you're a developer and want to read about how Pegger was made then read through this tutorial.</p>
+    <div class="jumbotron" ng-view></div>
 
-      <h4><a href="https://github.com/egillespie/pegger" target="_blank">GitHub</a></h4>
-      <p>Another developer resource for those who just want to browse the Pegger source code, report bugs, or request new features.</p>
+    <div class="row marketing">
+        <div class="col-lg-6">
+            <h4>Goal</h4>
+            <p>The game is won by successfully maneuvering a red <span class="small-peg r"></span> or green <span class="small-peg g"></span> peg next to the other peg of the same color.</p>
+            <h4>Overview</h4>
+            <p>Pegger is a peg jumping strategy game for two players. On your turn, select a red <span class="small-peg r"></span>, green <span class="small-peg g"></span>, or yellow <span class="small-peg y"></span> peg and then select the hole <span class="small-peg"></span> where you would like to move the peg.</p>
+            <p>Players take turns moving pegs until either both red pegs or both green pegs are next to each other. Sorry, diagonals and yellow pegs don't count and you can't undo the previous turn!</p>
+        </div>
+
+        <div class="col-lg-6">
+            <h4>Rules</h4>
+            <ul>
+                <li>A peg must be moved into an adjacent hole or jump an adjacent peg into a hole.</li>
+                <li>Diagonal movement is not permitted.</li>
+                <li>Only red <span class="small-peg r"></span> and green <span class="small-peg g"></span> pegs count toward victory.</li>
+                <li>Yellow <span class="small-peg y"></span> pegs may be moved but are considered neutral and do not count toward victory.</li>
+                <li>A player may not undo the most recent completed turn.</li>
+            </ul>
+            <h4>Feedback</h4>
+            Have questions or feedback? <a href="mailto:erik.gillespie@technicalrex.com">Email me</a>, I'd love to hear from you!
+        </div>
     </div>
-  </div>
 
-  <div class="footer">
-    <p>&copy; Technical Rex, Inc. 2014</p>
-  </div>
+    <div class="footer">
+        <p>&copy; <a href="http://technicalrex.com">Technical Rex, Inc.</a> 2014</p>
+    </div>
 </div>
 </body>
 </html>

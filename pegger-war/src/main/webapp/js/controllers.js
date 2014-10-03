@@ -1,8 +1,19 @@
 var peggerControllers = angular.module('peggerControllers', []);
 
 peggerControllers.controller('PeggerCtrl', ['$scope', 'games', function ($scope, games) {
+    initPlayer = function(player, name, nextPlayer) {
+        player.name = name;
+        player.next = nextPlayer;
+    };
+
+    var playerOne = {};
+    var playerTwo = {};
+    initPlayer(playerOne, "One", playerTwo);
+    initPlayer(playerTwo, "Two", playerOne);
+
     $scope.newGame = function() {
         $scope.selectedPeg = null;
+        $scope.currentPlayer = playerOne;
 
         games.post(function(response) {
             $scope.game = response.data;
@@ -26,6 +37,17 @@ peggerControllers.controller('PeggerCtrl', ['$scope', 'games', function ($scope,
         $scope.selectedPeg = findPeg(row, column);
     };
 
+    isTarget = function(row, column) {
+        if ($scope.selectedPeg && $scope.selectedPeg.position.row == row
+                && $scope.selectedPeg.position.column == column) {
+            return false;
+        }
+        if (!$scope.selectedPeg && !findPeg(row, column)) {
+            return false;
+        }
+        return true;
+    };
+
     $scope.pegStyle = function(row, column) {
         var style = '';
         var peg = findPeg(row, column);
@@ -34,13 +56,21 @@ peggerControllers.controller('PeggerCtrl', ['$scope', 'games', function ($scope,
         }
         if ($scope.selectedPeg && $scope.selectedPeg.position.row == row
                 && $scope.selectedPeg.position.column == column) {
-            style += " selected";
+            style += ' selected';
+        }
+        if (isTarget(row, column)) {
+            style += ' target';
         }
         return style;
     };
 
     $scope.pegClicked = function(row, column) {
-        if ($scope.selectedPeg) {
+        if (!isTarget(row, column)) {
+            return;
+        }
+        if (findPeg(row, column) || !$scope.selectedPeg) {
+            selectPeg(row, column);
+        } else if ($scope.selectedPeg) {
             var peg = JSON.parse(JSON.stringify($scope.selectedPeg));
             peg.position.row = row;
             peg.position.column = column;
@@ -49,6 +79,7 @@ peggerControllers.controller('PeggerCtrl', ['$scope', 'games', function ($scope,
                 $scope.game = response.data;
                 $scope.messageKey = '';
                 $scope.message = '';
+                $scope.currentPlayer = $scope.currentPlayer.next;
             }, function(response) {
                 $scope.selectedPeg = null;
                 switch (response.status) {
@@ -70,8 +101,6 @@ peggerControllers.controller('PeggerCtrl', ['$scope', 'games', function ($scope,
                         break;
                 }
             });
-        } else {
-            selectPeg(row, column);
         }
     };
 

@@ -46,6 +46,7 @@ body {
   text-align: center;
   border: 1px solid #937e62;
   background-color: #d2b48c;
+  position: relative;
 }
 .jumbotron .btn {
   padding: 14px 24px;
@@ -62,40 +63,51 @@ body {
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  /* Remove the padding we set earlier */
   .header,
   .marketing,
   .footer {
     padding-right: 0;
     padding-left: 0;
   }
-  /* Space out the masthead */
   .header {
     margin-bottom: 30px;
   }
-  /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
-    border-bottom: 0;
+      border-bottom: 0;
   }
 }
 
+.link:hover {
+    text-decoration: none;
+}
 .board {
     font-size: 63px;
 }
 .peg {
-    cursor: pointer;
     display: inline-block;
-    width: 1.1em;
-    height: 1.1em;
+    width: 1.2em;
+    height: 1.2em;
+    line-height: 1.2em;
     border: 1px solid #937e62;
     border-radius: 50%;
     background-color: white;
-    margin: 5px;
+    text-align: center;
     color: white;
+}
+.small-peg {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    border: 1px solid #937e62;
+    line-height: 0.8em;
+    border-radius: 50%;
+    background-color: white;
+}
+.target {
+    cursor: pointer;
 }
 .selected {
     border-width: 5px;
-    border-color: blue;
 }
 .r {
     background-color: #d9534f;
@@ -108,4 +120,41 @@ body {
 .y {
     background-color: #fef049;
     border-color: #ffd663;
+}
+.player-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 8px;
+    font-size: 12px;
+    color: #715e44;
+    border-left: 1px solid #937e62;
+    border-bottom: 1px solid #937e62;
+    background-color: #fcf8e3;
+    border-radius: 0 4px 0 4px;
+}
+.player {
+    font-weight: bold;
+}
+.message-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 5px 8px;
+    font-size: 12px;
+    color: #715e44;
+    border-top: 1px solid #9c8c73;
+    border-bottom: 1px solid #9c8c73;
+    background-color: #fcf8e3;
+    border-radius: 0 0 4px 4px;
+}
+.warning {
+    color: #a94442;
+    font-weight: bold;
+}
+.info {
+    color: #31708f;
+    font-weight: bold;
 }
