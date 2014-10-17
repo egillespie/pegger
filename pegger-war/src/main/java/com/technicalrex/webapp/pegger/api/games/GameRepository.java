@@ -34,6 +34,10 @@ public class GameRepository {
         return REPO.values();
     }
 
+    public Optional<Game> deleteById(UUID gameId) {
+        return Optional.fromNullable(REPO.remove(gameId));
+    }
+
     public Optional<Game> getById(UUID gameId) {
         return Optional.fromNullable(REPO.get(gameId));
     }

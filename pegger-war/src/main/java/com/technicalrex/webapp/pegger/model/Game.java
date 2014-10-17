@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
+import org.joda.time.Instant;
 
 import java.util.UUID;
 
@@ -32,12 +33,14 @@ public class Game {
     private final Optional<Peg> lastPegMoved;
     private final ImmutableMap<Integer, Peg> pegs;
     private final boolean gameOver;
+    private final Instant lastChangeTimestamp;
 
     private Game(UUID gameId, Peg lastPegMoved, ImmutableSet<Peg> pegs) {
         this.gameId = Preconditions.checkNotNull(gameId);
         this.lastPegMoved = Optional.fromNullable(lastPegMoved);
         this.pegs = Maps.uniqueIndex(Preconditions.checkNotNull(pegs), PEG_INDEXER);
         this.gameOver = calculateGameOver();
+        this.lastChangeTimestamp = Instant.now();
         validateGameState();
     }
 
@@ -80,6 +83,10 @@ public class Game {
 
     public boolean isGameOver() {
         return gameOver;
+    }
+
+    public Instant getLastChangeTimestamp() {
+        return lastChangeTimestamp;
     }
 
     private boolean calculateGameOver() {
@@ -144,6 +151,7 @@ public class Game {
                 .add("gameId", gameId)
                 .add("lastPegMoved", lastPegMoved)
                 .add("gameOver", gameOver)
+                .add("lastChangeTimestamp", lastChangeTimestamp)
                 .add("pegs", pegs)
                 .toString();
     }

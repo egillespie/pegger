@@ -1,5 +1,6 @@
 package com.technicalrex.webapp.pegger.internal;
 
+import com.technicalrex.webapp.pegger.api.ToolResource;
 import com.technicalrex.webapp.pegger.api.games.GameResource;
 import com.technicalrex.webapp.pegger.api.games.PegResource;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -14,5 +15,6 @@ public class JerseyConfig extends ResourceConfig {
         // Application resources
         register(GameResource.class);
         register(PegResource.class);
+        register(ToolResource.class);
     }
 }
