@@ -77,6 +77,18 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+    .header > h2 {
+        display: none;
+    }
+    .header {
+        height: 47px;
+    }
+    .jumbotron > h1 {
+        font-size: 28px;
+    }
+}
+
 .link:hover {
     text-decoration: none;
 }
