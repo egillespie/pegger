@@ -87,6 +87,16 @@ body {
     .jumbotron > h1 {
         font-size: 28px;
     }
+    .board {
+        padding: 0 10%;
+    }
+    .row1 {
+        width: 1.5em;
+        float: right;
+    }
+    .row2 {
+        width: 1.5em;
+    }
 }
 
 .link:hover {
