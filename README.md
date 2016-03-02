@@ -18,7 +18,7 @@ remaining pieces. Arrange the remaining pegs (green, red, and yellow in my case)
 starting positions as shown below. The white circles indicate empty holes, all other colored
 circles indicate where a colored peg should be placed in the board.
 
-![Starting Layout](http://technicalrex.files.wordpress.com/2014/08/peggerinitialstate1.png)
+![Starting Layout](http://technicalrex.com/img/posts/pegger/peggerinitialstate.png)
 
 The goal of Pegger is to be the first player to move a red or green peg into a hole adjacent
 to the other peg of the same color. Yellow pegs do not count towards the victory condition,
