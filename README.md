@@ -1,4 +1,4 @@
-Pegger
+Pegger - Java
 =============================
 
 Pegger is a 2-player turn-based strategy game that I invented one early morning while playing
