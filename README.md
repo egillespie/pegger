@@ -1,3 +1,5 @@
+[![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/egillespie?utm_source=github&utm_medium=button&utm_term=egillespie&utm_campaign=github)
+
 Pegger - Java
 =============================
 
