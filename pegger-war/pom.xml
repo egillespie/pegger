@@ -16,7 +16,7 @@
         <appengine.app.version>1-war</appengine.app.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring.version>4.0.6.RELEASE</spring.version>
+        <spring.version>4.2.7.RELEASE</spring.version>
         <jersey.version>2.11</jersey.version>
         <jackson.version>2.13.4.1</jackson.version>
     </properties>
